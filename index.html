@@ -260,7 +260,7 @@
             transition: border-color var(--transition);
         }
         .map-container:hover { border-color: var(--accent-red); }
-        .map-container iframe, .map-container .ymaps-3-0-0-map { width: 100%; height: 100%; border: 0; }
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
 
         /* Форма */
         .form-block {
@@ -454,8 +454,10 @@
                 <a href="tel:+79786835691" class="btn btn-primary">📞 Позвонить</a>
                 <a href="https://t.me/NikolayBDC" class="btn btn-telegram" target="_blank">💬 Telegram</a>
             </div>
-            <!-- Карта через API Яндекс -->
-            <div class="map-container" id="map"></div>
+            <!-- Карта через iframe (надёжно) -->
+            <div class="map-container">
+                <iframe src="https://yandex.ru/map-widget/v1/?ll=33.4750%2C44.5865&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1NjM4Njg5NRIa0KDQvtGB0YHQuNGPLCDQodC10LLQsNGB0YLQvtC%2F0L7Qu9GMLCDRg9C70LjRhtCwINCT0L7QtNC70LXQstGB0LrQvtCz0L4iCg0zR4NCFUJ9I14g&z=16" width="100%" height="450" frameborder="0" allowfullscreen></iframe>
+            </div>
             <div class="form-block" id="form">
                 <h2 class="text-center" style="margin-bottom: 20px;">Оставить заявку</h2>
                 <p class="text-center" style="color: var(--text-secondary); margin-bottom: 30px;">Перезвоню в течение 15 минут. Работаю без выходных, 10:00–20:00.</p>
@@ -540,31 +542,7 @@
 
     <button id="backToTop" class="back-to-top" title="Наверх">↑</button>
 
-    <!-- Яндекс.Карты с твоим ключом -->
-    <script src="https://api-maps.yandex.ru/3.0/?apikey=e107a3c3-dff9-4ce6-935b-9d6580daaf7d&lang=ru_RU" type="text/javascript"></script>
-    <script>
-        ymaps.ready(function () {
-            var map = new ymaps.Map('map', {
-                center: [44.5865, 33.4750], // ул. Годлевского (уточни координаты, если нужно)
-                zoom: 16,
-                controls: ['zoomControl', 'fullscreenControl']
-            });
-
-            var placemark = new ymaps.Placemark([44.5865, 33.4750], {
-                hintContent: 'Bavarian Garage 92',
-                balloonContent: 'Севастополь, ул. Годлевского<br>Кодинг, диагностика BMW'
-            }, {
-                iconLayout: 'default#image',
-                iconImageHref: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNFMzA2MTMiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=',
-                iconImageSize: [40, 40],
-                iconImageOffset: [-20, -40]
-            });
-
-            map.geoObjects.add(placemark);
-        });
-    </script>
-
-    <!-- Остальные скрипты (меню, аккордеон, анимация, форма) -->
+    <!-- Скрипты -->
     <script>
         // Мобильное меню
         document.getElementById('menuToggle').addEventListener('click', function() {
@@ -593,13 +571,14 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Подсветка меню при скролле
+        // Подсветка активного пункта меню при скролле (работает для всех разделов)
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-links a');
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
-                if (pageYOffset >= section.offsetTop - 100) {
+                const sectionTop = section.offsetTop - 120;
+                if (pageYOffset >= sectionTop) {
                     current = section.getAttribute('id');
                 }
             });
@@ -611,7 +590,7 @@
             });
         });
 
-        // Анимация появления секций
+        // Анимация появления секций (fade-up)
         const fadeElements = document.querySelectorAll('.fade-up');
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
