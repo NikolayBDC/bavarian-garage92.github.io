@@ -8,6 +8,8 @@
     <link rel="canonical" href="https://nikolaybdc.github.io/">
     <meta name="google-site-verification" content="Ktkwrs-PAuKucOJzSBa8IHQZ1r0P6Nkv8ovrwbKitqw" />
     <meta name="yandex-verification" content="942df48e7ba237a4" />
+    <!-- Кастомная иконка (favicon) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='none' stroke='%23E30613' stroke-width='4'/%3E%3Ctext x='50' y='68' font-family='Arial, sans-serif' font-size='60' font-weight='bold' fill='%230066B3' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -258,7 +260,7 @@
             transition: border-color var(--transition);
         }
         .map-container:hover { border-color: var(--accent-red); }
-        .map-container iframe { width: 100%; height: 100%; border: 0; }
+        .map-container iframe, .map-container > ymaps { width: 100%; height: 100%; border: 0; }
 
         /* Форма */
         .form-block {
@@ -452,7 +454,7 @@
                 <a href="tel:+79786835691" class="btn btn-primary">📞 Позвонить</a>
                 <a href="https://t.me/NikolayBDC" class="btn btn-telegram" target="_blank">💬 Telegram</a>
             </div>
-            <!-- Контейнер для Яндекс.Карты -->
+            <!-- Карта через API Яндекс -->
             <div class="map-container" id="map"></div>
             <div class="form-block" id="form">
                 <h2 class="text-center" style="margin-bottom: 20px;">Оставить заявку</h2>
@@ -538,13 +540,12 @@
 
     <button id="backToTop" class="back-to-top" title="Наверх">↑</button>
 
-    <!-- Подключение Яндекс.Карт с твоим ключом -->
+    <!-- Яндекс.Карты с твоим ключом -->
     <script src="https://api-maps.yandex.ru/3.0/?apikey=e107a3c3-dff9-4ce6-935b-9d6580daaf7d&lang=ru_RU" type="text/javascript"></script>
     <script>
         ymaps.ready(function () {
             var map = new ymaps.Map('map', {
-                // Примерные координаты ул. Годлевского (замени на точные, если хочешь)
-                center: [44.5865, 33.4750],
+                center: [44.5865, 33.4750], // ул. Годлевского (уточни координаты, если нужно)
                 zoom: 16,
                 controls: ['zoomControl', 'fullscreenControl']
             });
@@ -563,6 +564,7 @@
         });
     </script>
 
+    <!-- Остальные скрипты (меню, аккордеон, анимация, форма) -->
     <script>
         // Мобильное меню
         document.getElementById('menuToggle').addEventListener('click', function() {
