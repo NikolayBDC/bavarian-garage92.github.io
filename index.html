@@ -191,33 +191,58 @@
         .service-price { font-size: 24px; font-weight: 700; color: var(--accent-blue); margin-bottom: 20px; position: relative; z-index: 1; }
         .service-card .btn { width: 100%; text-align: center; position: relative; z-index: 1; }
 
-        /* Процесс */
-        .steps-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        /* Процесс – улучшенный */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
         .step-item {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 35px 30px;
+            padding: 30px 25px 30px 90px;
             position: relative;
-            transition: border-color var(--transition), box-shadow var(--transition);
+            transition: all 0.3s ease;
+            overflow: hidden;
         }
         .step-item:hover {
             border-color: var(--accent-red);
-            box-shadow: 0 8px 20px rgba(229,6,19,0.12);
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(229,6,19,0.15);
         }
         .step-number {
-            font-size: 48px;
-            font-weight: 900;
-            color: var(--accent-red);
-            opacity: 0.15;
             position: absolute;
-            top: 15px; right: 25px;
+            top: 20px;
+            left: 20px;
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-m-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             line-height: 1;
+        }
+        .step-item h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .step-item p {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+        /* иконки шагов */
+        .step-item .step-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            opacity: 0.1;
             transition: opacity 0.3s;
         }
-        .step-item:hover .step-number { opacity: 0.3; }
-        .step-item h3 { font-size: 20px; margin-bottom: 10px; color: #fff; }
-        .step-item p { color: var(--text-secondary); font-size: 15px; }
+        .step-item:hover .step-icon { opacity: 0.25; }
 
         /* FAQ */
         .faq-list { max-width: 800px; margin: 0 auto; }
@@ -342,7 +367,8 @@
         @media (min-width: 768px) {
             .services-grid { grid-template-columns: repeat(3, 1fr); }
             .steps-grid { grid-template-columns: repeat(4, 1fr); }
-            .about-card { flex-direction: row; }
+            .step-item { padding: 30px 20px 30px 80px; }
+            .step-number { font-size: 32px; }
         }
         @media (max-width: 768px) {
             .nav-links { display: none; flex-direction: column; width: 100%; background: #000; padding: 20px; gap: 15px; }
@@ -352,8 +378,7 @@
             .hero { padding: 80px 20px 60px; }
             .btn { padding: 12px 24px; font-size: 14px; }
             .back-to-top { bottom: 20px; right: 20px; }
-            .about-card { flex-direction: column; text-align: center; }
-            .about-icon { margin: 0 auto; }
+            .step-item { padding: 25px 20px 25px 80px; }
         }
     </style>
 </head>
@@ -433,27 +458,31 @@
             </div>
         </section>
 
-        <!-- Процесс -->
+        <!-- Процесс работы (улучшенный) -->
         <section id="process" class="container fade-up">
             <h2 class="text-center">Как я работаю</h2>
             <div class="steps-grid">
                 <div class="step-item">
                     <div class="step-number">01</div>
+                    <div class="step-icon">📝</div>
                     <h3>Заявка</h3>
                     <p>Вы оставляете заявку через форму или Telegram. Я связываюсь с вами за 15 минут.</p>
                 </div>
                 <div class="step-item">
                     <div class="step-number">02</div>
+                    <div class="step-icon">🔍</div>
                     <h3>Диагностика</h3>
                     <p>Провожу компьютерную диагностику, определяю проблему или нужные опции.</p>
                 </div>
                 <div class="step-item">
                     <div class="step-number">03</div>
+                    <div class="step-icon">⚙️</div>
                     <h3>Работа</h3>
                     <p>Выполняю кодинг, чип-тюнинг или ретрофит. Делаю резервную копию.</p>
                 </div>
                 <div class="step-item">
                     <div class="step-number">04</div>
+                    <div class="step-icon">✅</div>
                     <h3>Результат</h3>
                     <p>Вы получаете готовый автомобиль с расширенными возможностями и гарантией.</p>
                 </div>
@@ -499,8 +528,9 @@
                 <a href="tel:+79786835691" class="btn btn-primary">📞 Позвонить</a>
                 <a href="https://t.me/NikolayBDC" class="btn btn-telegram" target="_blank">💬 Telegram</a>
             </div>
+            <!-- Карта с точными координатами -->
             <div class="map-container">
-                <iframe src="https://yandex.ru/map-widget/v1/?ll=33.4750%2C44.5865&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1NjM4Njg5NRIa0KDQvtGB0YHQuNGPLCDQodC10LLQsNGB0YLQvtC%2F0L7Qu9GMLCDRg9C70LjRhtCwINCT0L7QtNC70LXQstGB0LrQvtCz0L4iCg0zR4NCFUJ9I14g&z=16" width="100%" height="450" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://yandex.ru/map-widget/v1/?ll=33.519215%2C44.599142&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgg1NjM4Njg5NRIa0KDQvtGB0YHQuNGPLCDQodC10LLQsNGB0YLQvtC%2F0L7Qu9GMLCDRg9C70LjRhtCwINCT0L7QtNC70LXQstGB0LrQvtCz0L4iCg0zR4NCFUJ9I14g&z=17" width="100%" height="450" frameborder="0" allowfullscreen></iframe>
             </div>
             <div class="form-block" id="form">
                 <h2 class="text-center" style="margin-bottom: 20px;">Оставить заявку</h2>
@@ -630,7 +660,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Подсветка меню (исправлено для "О мастере")
+        // Подсветка меню
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-links a');
         window.addEventListener('scroll', () => {
@@ -641,7 +671,6 @@
                     current = section.getAttribute('id');
                 }
             });
-            // Отдельная проверка для about, т.к. он в самом низу
             const aboutSection = document.getElementById('about');
             if (aboutSection && (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
                 current = 'about';
