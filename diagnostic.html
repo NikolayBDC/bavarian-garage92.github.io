@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кодинг BMW FDL/VO — активация опций, отключение ошибок | Bavarian Garage 92 Севастополь</title>
+    <meta name="description" content="Кодинг BMW любых серий: E39, E46, E90, F10, F30, G20, G70. Активация скрытых функций, отключение Start/Stop, коррекция пробега, адаптация.">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Стили как в diagnostic.html, можно скопировать */
+        :root { --bg: #000; --surface: #0a0a0a; --border: #1a1a1a; --text: #f0f0f0; --text-secondary: #a0a0a0; --accent-red: #E30613; --accent-blue: #0066B3; --radius: 4px; --transition: 0.25s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        a { color: var(--accent-red); text-decoration: none; transition: color var(--transition); }
+        .btn { display: inline-block; padding: 14px 32px; font-weight: 600; font-size: 15px; border-radius: var(--radius); text-align: center; transition: all 0.3s ease; border: 1px solid transparent; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; position: relative; overflow: hidden; }
+        .btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; }
+        .btn:hover::after { left: 100%; }
+        .btn-primary { background: var(--accent-red); color: #fff; border-color: var(--accent-red); }
+        .btn-primary:hover { background: transparent; color: var(--accent-red); box-shadow: 0 8px 20px rgba(229,6,19,0.25); }
+        .btn-telegram { background: #2AABEE; color: #fff; border-color: #2AABEE; }
+        .btn-telegram:hover { background: transparent; color: #2AABEE; box-shadow: 0 4px 12px rgba(42,171,238,0.4); }
+        .main-header { background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent-red); }
+        .header-links { display: flex; gap: 15px; align-items: center; }
+        .header-links a { color: var(--text-secondary); font-weight: 600; font-size: 14px; transition: color var(--transition); }
+        .header-links a:hover { color: #fff; }
+        section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+        h1 { font-size: 36px; font-weight: 700; margin-bottom: 30px; color: #fff; }
+        h2 { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #fff; }
+        .accordion { margin: 30px 0; }
+        .accordion-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 15px; overflow: hidden; background: var(--surface); transition: border-color var(--transition), box-shadow var(--transition); }
+        .accordion-item:hover { border-color: var(--accent-red); box-shadow: 0 4px 12px rgba(229,6,19,0.1); }
+        .accordion-question { width: 100%; text-align: left; padding: 20px 25px; background: var(--surface); color: #fff; font-weight: 600; font-size: 18px; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background var(--transition); }
+        .accordion-question:hover { background: #141414; }
+        .accordion-question::after { content: '+'; font-size: 24px; color: var(--accent-red); transition: transform 0.2s; }
+        .accordion-item.active .accordion-question::after { content: '−'; }
+        .accordion-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; background: #050505; color: var(--text-secondary); }
+        .accordion-item.active .accordion-answer { padding: 15px 25px; max-height: 500px; }
+        .note { background: var(--surface); border-left: 3px solid var(--accent-red); padding: 20px; margin: 30px 0; color: var(--text-secondary); border-radius: var(--radius); }
+        .contact-btns { display: flex; gap: 15px; justify-content: center; margin: 30px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: var(--text-secondary); font-size: 14px; }
+        .back-link:hover { color: #fff; }
+        footer { background: #000; border-top: 1px solid var(--border); text-align: center; padding: 30px 20px; font-size: 13px; color: #777; }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">Bavarian <span>Garage 92</span></a>
+            <div class="header-links">
+                <a href="tel:+79786835691">+7 (978) 683-56-91</a>
+                <a href="https://t.me/NikolayBDC" target="_blank">Telegram</a>
+                <a href="index.html#form" class="btn btn-primary" style="padding:10px 20px; font-size:13px;">Записаться</a>
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        <a href="index.html" class="back-link">← На главную</a>
+        <h1>Кодинг BMW (FDL/VO)</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 30px;">
+            Активирую скрытые заводские функции, отключаю ненужные опции (например, Start/Stop), адаптирую блоки под ретрофит. Работаю со всеми популярными кузовами.
+        </p>
+
+        <h2>Популярные кодировки по сериям</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-question">E-серия (E39, E46, E60, E90, E70...)</button>
+                <div class="accordion-answer">
+                    <p>• Цифровая скорость на приборке<br>• Отключение проверки ламп<br>• Закрытие зеркал с ключа<br>• Адаптация под ретрофит (Multimedia, спорт-кнопка)</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-question">F-серия (F10, F20, F30, F25, F15...)</button>
+                <div class="accordion-answer">
+                    <p>• Отключение Start/Stop (по умолчанию выключен)<br>• Активация видеорегистратора через штатные камеры<br>• M Performance приборка<br>• Разблокировка доп. функций навигации</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-question">G-серия (G20, G30, G70, G01...)</button>
+                <div class="accordion-answer">
+                    <p>• Активация ассистентов (ускоренный круиз, удержание полосы)<br>• Расширенный Ambient Light<br>• Отключение звука ASD<br>• Адаптация под новые блоки</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="note">
+            <strong>Как заказать:</strong> Напишите VIN-код автомобиля, я скажу, какие кодировки доступны именно для вашей машины. Все изменения обратимы.
+        </div>
+
+        <div class="contact-btns">
+            <a href="index.html#form" class="btn btn-primary">Записаться на кодинг</a>
+            <a href="https://t.me/NikolayBDC" class="btn btn-telegram" target="_blank">Задать вопрос в Telegram</a>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            © 2025 Bavarian Garage 92. ИП Николай BDC. Севастополь, ул. Годлевского.
+        </div>
+    </footer>
+    <script>
+        document.querySelectorAll('.accordion-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

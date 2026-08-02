@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bavarian Garage 92 — Кодинг BMW в Севастополе | Диагностика, CarPlay, чип-тюнинг</title>
+    <meta name="description" content="Профессиональный кодинг и диагностика BMW в Севастополе. Активация опций, CarPlay, чип-тюнинг. Выезд, удалённо. Запись онлайн.">
+    <link rel="canonical" href="https://nikolaybdc.github.io/">
+    <meta name="google-site-verification" content="Ktkwrs-PAuKucOJzSBa8IHQZ1r0P6Nkv8ovrwbKitqw" />
+    <meta name="yandex-verification" content="942df48e7ba237a4" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000;
+            --surface: #0a0a0a;
+            --border: #1a1a1a;
+            --text: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --accent-red: #E30613;
+            --accent-blue: #0066B3;
+            --radius: 4px;
+            --transition: 0.25s ease;
+            --shadow-red: 0 8px 20px rgba(229,6,19,0.25);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        a { color: var(--accent-red); text-decoration: none; transition: color var(--transition); }
+        .btn {
+            display: inline-block; padding: 14px 32px; font-weight: 600; font-size: 15px;
+            border-radius: var(--radius); text-align: center; transition: all 0.3s ease;
+            border: 1px solid transparent; cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase;
+            position: relative; overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        .btn:hover::after { left: 100%; }
+        .btn-primary { background: var(--accent-red); color: #fff; border-color: var(--accent-red); }
+        .btn-primary:hover { background: transparent; color: var(--accent-red); box-shadow: var(--shadow-red); }
+        .btn-outline { background: transparent; color: #fff; border-color: var(--border); }
+        .btn-outline:hover { border-color: var(--accent-red); color: var(--accent-red); box-shadow: 0 4px 12px rgba(229,6,19,0.15); }
+        .btn-telegram { background: #2AABEE; color: #fff; border-color: #2AABEE; }
+        .btn-telegram:hover { background: transparent; color: #2AABEE; box-shadow: 0 4px 12px rgba(42,171,238,0.4); }
+        .text-center { text-align: center; }
+
+        /* Шапка */
+        .main-header {
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-size: 24px; font-weight: 700; color: #fff; letter-spacing: -0.5px; transition: color var(--transition); }
+        .logo span { color: var(--accent-red); }
+        .logo:hover { color: #ccc; }
+        .nav-links { display: flex; gap: 25px; align-items: center; list-style: none; }
+        .nav-links a {
+            color: var(--text-secondary); font-weight: 600; font-size: 14px; text-transform: uppercase;
+            letter-spacing: 0.5px; padding: 5px 0; border-bottom: 2px solid transparent;
+            transition: color var(--transition), border-color var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent-red);
+            transition: width var(--transition);
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after { width: 100%; }
+        .nav-links a:hover,
+        .nav-links a.active { color: #fff; }
+        .menu-toggle { display: none; background: none; border: none; cursor: pointer; padding: 10px; flex-direction: column; gap: 5px; }
+        .menu-toggle span { display: block; width: 25px; height: 2px; background: #fff; transition: 0.3s; }
+
+        /* Hero */
+        .hero {
+            padding: 140px 20px 120px;
+            text-align: center;
+            background: radial-gradient(circle at 30% 40%, #1a1a1a 0%, #000 80%);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(229,6,19,0.05) 0%, transparent 70%);
+            animation: pulse 8s infinite alternate;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.5; }
+            to { transform: scale(1.1); opacity: 0.8; }
+        }
+        .hero h1 { font-size: 72px; color: #fff; margin-bottom: 20px; letter-spacing: -1px; position: relative; z-index: 2; }
+        .hero h1 span { color: var(--accent-red); }
+        .hero p { font-size: 18px; color: var(--text-secondary); margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; position: relative; z-index: 2; }
+        .hero .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 2; }
+
+        /* Секции */
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        section:last-of-type { border-bottom: none; }
+
+        h2 {
+            font-size: 36px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 50px;
+            position: relative; padding-bottom: 15px;
+        }
+        h2::after { content: ''; position: absolute; left: 0; bottom: 0; width: 50px; height: 2px; background: var(--accent-red); }
+        .text-center h2::after { left: 50%; transform: translateX(-50%); }
+
+        /* Анимация появления */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Услуги */
+        .services-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        .service-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            transition: all 0.35s ease;
+            display: flex; flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0,102,179,0.06) 0%, rgba(229,6,19,0.04) 100%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            z-index: 0;
+        }
+        .service-card:hover::before { opacity: 1; }
+        .service-card:hover {
+            background: #141414;
+            border-color: var(--accent-red);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-red);
+        }
+        .service-icon { width: 56px; margin-bottom: 25px; filter: brightness(0) invert(1); position: relative; z-index: 1; transition: transform 0.3s ease; }
+        .service-card:hover .service-icon { transform: scale(1.1); }
+        .service-card h3 { font-size: 22px; margin-bottom: 12px; color: #fff; position: relative; z-index: 1; }
+        .service-desc { color: var(--text-secondary); font-size: 15px; margin-bottom: 20px; flex-grow: 1; position: relative; z-index: 1; }
+        .service-price { font-size: 24px; font-weight: 700; color: var(--accent-blue); margin-bottom: 20px; position: relative; z-index: 1; }
+        .service-card .btn { width: 100%; text-align: center; position: relative; z-index: 1; }
+
+        /* Процесс */
+        .steps-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        .step-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 35px 30px;
+            position: relative;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .step-item:hover {
+            border-color: var(--accent-red);
+            box-shadow: 0 8px 20px rgba(229,6,19,0.12);
+        }
+        .step-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--accent-red);
+            opacity: 0.15;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            line-height: 1;
+            transition: opacity 0.3s;
+        }
+        .step-item:hover .step-number { opacity: 0.3; }
+        .step-item h3 { font-size: 20px; margin-bottom: 10px; color: #fff; }
+        .step-item p { color: var(--text-secondary); font-size: 15px; }
+
+        /* FAQ */
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            border: 1px solid var(--border); border-radius: var(--radius);
+            margin-bottom: 15px; overflow: hidden; background: var(--surface);
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .faq-item:hover { border-color: var(--accent-red); box-shadow: 0 4px 12px rgba(229,6,19,0.1); }
+        .faq-question {
+            width: 100%; text-align: left; padding: 20px 25px;
+            background: var(--surface); color: #fff; font-weight: 600; font-size: 18px;
+            border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            transition: background var(--transition);
+        }
+        .faq-question:hover { background: #141414; }
+        .faq-question::after {
+            content: '+'; font-size: 24px; color: var(--accent-red); transition: transform 0.2s;
+        }
+        .faq-item.active .faq-question::after { content: '−'; }
+        .faq-answer {
+            padding: 0 25px; max-height: 0; overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background: #050505; color: var(--text-secondary);
+        }
+        .faq-item.active .faq-answer { padding: 15px 25px; max-height: 400px; }
+
+        /* Кнопка наверх */
+        .back-to-top {
+            position: fixed; bottom: 30px; right: 30px; z-index: 99;
+            width: 50px; height: 50px; background: var(--accent-red); color: #fff;
+            border: none; border-radius: 50%; font-size: 24px; line-height: 1;
+            cursor: pointer; opacity: 0; transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 12px rgba(229,6,19,0.4);
+        }
+        .back-to-top.show { opacity: 1; transform: translateY(0); }
+        .back-to-top:hover { box-shadow: 0 6px 16px rgba(229,6,19,0.7); }
+
+        /* Контакты */
+        .contact-info { text-align: center; margin-bottom: 30px; color: var(--text-secondary); font-size: 16px; }
+        .contact-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+        .map-container {
+            width: 100%; height: 450px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); overflow: hidden; margin-top: 40px;
+            transition: border-color var(--transition);
+        }
+        .map-container:hover { border-color: var(--accent-red); }
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
+
+        /* Форма */
+        .form-block {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 50px 35px; max-width: 600px; margin: 60px auto 0;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+        .form-block:hover { border-color: var(--accent-red); box-shadow: 0 8px 20px rgba(229,6,19,0.1); }
+        .form-group { margin-bottom: 25px; }
+        .form-group label {
+            display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px;
+            text-transform: uppercase; letter-spacing: 0.5px; color: var(--text);
+        }
+        .form-group input, .form-group select {
+            width: 100%; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border);
+            border-radius: var(--radius); color: var(--text); font-family: inherit; font-size: 15px;
+            transition: border-color var(--transition), box-shadow var(--transition); outline: none;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--accent-red); box-shadow: 0 0 8px rgba(229,6,19,0.3); }
+        .form-submit { width: 100%; padding: 16px; font-size: 16px; font-weight: 700; }
+        .form-message {
+            padding: 12px; border-radius: var(--radius); font-weight: 600;
+            text-align: center; margin-bottom: 20px;
+        }
+
+        /* О мастере */
+        .about-content { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
+        .about-text { color: var(--text-secondary); line-height: 1.8; font-size: 16px; }
+
+        /* Подвал */
+        .main-footer {
+            background: #000; border-top: 1px solid var(--border); text-align: center;
+            padding: 30px 20px; font-size: 13px; color: #777;
+        }
+
+        /* Адаптив */
+        @media (min-width: 768px) {
+            .services-grid { grid-template-columns: repeat(3, 1fr); }
+            .steps-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; flex-direction: column; width: 100%; background: #000; padding: 20px; gap: 15px; }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: flex; }
+            .hero h1 { font-size: 42px; }
+            .hero { padding: 80px 20px 60px; }
+            .btn { padding: 12px 24px; font-size: 14px; }
+            .back-to-top { bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-inner">
+            <a href="#" class="logo">Bavarian <span>Garage 92</span></a>
+            <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" class="active">Главная</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#process">Процесс</a></li>
+                <li><a href="#faq">Вопросы</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+                <li><a href="#about">О мастере</a></li>
+                <li><a href="blog.html">Блог</a></li>
+            </ul>
+        </div>
+    </header>
+    <main>
+        <!-- Hero -->
+        <section id="hero" class="hero">
+            <h1>Bavarian <span>Garage 92</span></h1>
+            <p>Кодинг, диагностика, ретрофит BMW. Севастополь, выезд, удалённая работа.</p>
+            <div class="btn-group">
+                <a href="#form" class="btn btn-primary">Записаться</a>
+                <a href="https://t.me/NikolayBDC" class="btn btn-telegram" target="_blank">Telegram</a>
+            </div>
+        </section>
+
+        <!-- Услуги -->
+        <section id="services" class="container fade-up">
+            <h2>Услуги и стоимость</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3C/svg%3E" class="service-icon" alt="Диагностика">
+                    <h3>Компьютерная диагностика</h3>
+                    <p class="service-desc">Полное сканирование всех блоков, ошибки, тесты. Отчёт с рекомендациями.</p>
+                    <p class="service-price">от 1 500 ₽</p>
+                    <a href="diagnostic.html" class="btn btn-outline">Подробнее</a>
+                </div>
+                <div class="service-card">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpolyline points='16 18 22 12 16 6'/%3E%3Cpolyline points='8 6 2 12 8 18'/%3E%3C/svg%3E" class="service-icon" alt="Кодинг">
+                    <h3>Кодинг BMW (FDL/VO)</h3>
+                    <p class="service-desc">Активация скрытых функций, отключение ошибок, адаптация ретрофита.</p>
+                    <p class="service-price">от 2 000 ₽</p>
+                    <a href="coding.html" class="btn btn-outline">Подробнее</a>
+                </div>
+                <div class="service-card">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Crect x='5' y='2' width='14' height='20' rx='2' ry='2'/%3E%3Cline x1='12' y1='18' x2='12.01' y2='18'/%3E%3C/svg%3E" class="service-icon" alt="CarPlay">
+                    <h3>Активация Apple CarPlay / Android Auto</h3>
+                    <p class="service-desc">Штатная активация, установка антенны. Работает как с завода.</p>
+                    <p class="service-price">от 5 000 ₽</p>
+                    <a href="carplay.html" class="btn btn-outline">Подробнее</a>
+                </div>
+                <div class="service-card">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M12 20V10'/%3E%3Cpath d='M18 20V4'/%3E%3Cpath d='M6 20v-4'/%3E%3C/svg%3E" class="service-icon" alt="Чип-тюнинг">
+                    <h3>Чип-тюнинг</h3>
+                    <p class="service-desc">Stage 1 / 2 / 3 / 4+. Безопасное увеличение мощности под любые задачи.</p>
+                    <p class="service-price">от 12 000 ₽</p>
+                    <a href="chiptuning.html" class="btn btn-outline">Подробнее</a>
+                </div>
+                <div class="service-card">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 6v6l4 2'/%3E%3C/svg%3E" class="service-icon" alt="Ретрофит">
+                    <h3>Ретрофит и дооснащение</h3>
+                    <p class="service-desc">Подрулевые лепестки, камеры, приборки 6WB, подогревы. Кодирование.</p>
+                    <p class="service-price">от 3 000 ₽</p>
+                    <a href="retrofit.html" class="btn btn-outline">Подробнее</a>
+                </div>
+                <div class="service-card">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='1.5'%3E%3Crect x='1' y='3' width='15' height='13'/%3E%3Cpolygon points='23 7 16 12 23 17 23 7'/%3E%3C/svg%3E" class="service-icon" alt="Выезд">
+                    <h3>Выезд / удалённая работа</h3>
+                    <p class="service-desc">Приеду по Севастополю и Крыму. Удалённое кодирование по России.</p>
+                    <p class="service-price">от 2 000 ₽</p>
+                    <a href="remote.html" class="btn btn-outline">Подробнее</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Процесс -->
+        <section id="process" class="container fade-up">
+            <h2 class="text-center">Как я работаю</h2>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">01</div>
+                    <h3>Заявка</h3>
+                    <p>Вы оставляете заявку через форму или Telegram. Я связываюсь с вами за 15 минут.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">02</div>
+                    <h3>Диагностика</h3>
+                    <p>Провожу компьютерную диагностику, определяю проблему или нужные опции.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">03</div>
+                    <h3>Работа</h3>
+                    <p>Выполняю кодинг, чип-тюнинг или ретрофит. Делаю резервную копию.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">04</div>
+                    <h3>Результат</h3>
+                    <p>Вы получаете готовый автомобиль с расширенными возможностями и гарантией.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="container fade-up">
+            <h2 class="text-center">Часто задаваемые вопросы</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">Что такое кодинг BMW и безопасно ли это?</button>
+                    <div class="faq-answer">Кодинг — это активация скрытых или заблокированных функций автомобиля без вмешательства в «мозги» двигателя. Все изменения обратимы, я всегда делаю резервную копию.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Сколько времени занимает кодирование?</button>
+                    <div class="faq-answer">Обычно 20–40 минут для простых опций. Сложные ретрофиты могут занять до 2 часов. Работаю аккуратно, без спешки.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Какие автомобили обслуживаете?</button>
+                    <div class="faq-answer">BMW от E39 до новейших G70. Знаю особенности каждой серии, блоки, проводку. Если сомневаетесь — просто напишите VIN, я скажу, что можно сделать.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Даёте ли гарантию на работу?</button>
+                    <div class="faq-answer">Да, на все виды кодинга и диагностики — гарантия 30 дней. Если что-то пойдёт не так (что бывает крайне редко), всё поправлю.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Можно ли сделать удалённо?</button>
+                    <div class="faq-answer">Конечно! Работаю по TeamViewer с клиентами по всей России. Нужен только ноутбук и кабель ENET.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты + Форма + Карта -->
+        <section id="contacts" class="container fade-up">
+            <h2 class="text-center">Контакты</h2>
+            <div class="contact-info">
+                <p><strong>Адрес:</strong> Севастополь, ул. Годлевского</p>
+                <p><strong>Телефон:</strong> <a href="tel:+79786835691">+7 (978) 683-56-91</a></p>
+                <p><strong>Telegram:</strong> <a href="https://t.me/NikolayBDC" target="_blank">@NikolayBDC</a></p>
+            </div>
+            <div class="contact-buttons">
+                <a href="tel:+79786835691" class="btn btn-primary">📞 Позвонить</a>
+                <a href="https://t.me/NikolayBDC" class="btn btn-telegram" target="_blank">💬 Telegram</a>
+            </div>
+            <div class="map-container">
+                <!-- ЗАМЕНИТЕ НА IFRAME ИЗ КОНСТРУКТОРА ЯНДЕКС.КАРТ (ссылка https://yandex.ru/maps/-/CTC4667v) -->
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aтвой_код_конструктора_Годлевского&lang=ru_RU&scroll=true" allowfullscreen></iframe>
+            </div>
+            <div class="form-block" id="form">
+                <h2 class="text-center" style="margin-bottom: 20px;">Оставить заявку</h2>
+                <p class="text-center" style="color: var(--text-secondary); margin-bottom: 30px;">Перезвоню в течение 15 минут. Работаю без выходных, 10:00–20:00.</p>
+                <form id="leadForm" action="https://formspree.io/f/xdaqqnlz" method="POST">
+                    <div class="form-group">
+                        <label for="name">Имя</label>
+                        <input type="text" id="name" name="name" placeholder="Александр" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон <span style="color:#E30613;">*</span></label>
+                        <input type="tel" id="phone" name="phone" placeholder="+7 978 683-56-91" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vin">VIN-код (необязательно)</label>
+                        <input type="text" id="vin" name="vin" placeholder="WBA...">
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Услуга</label>
+                        <select id="service" name="service">
+                            <option value="">— Выберите —</option>
+                            <option>Диагностика</option>
+                            <option>Кодинг</option>
+                            <option>Активация CarPlay</option>
+                            <option>Чип-тюнинг</option>
+                            <option>Ретрофит</option>
+                            <option>Выезд / удалённо</option>
+                        </select>
+                    </div>
+                    <div id="formMessage" class="form-message" style="display:none;"></div>
+                    <button type="submit" class="btn btn-primary form-submit">Отправить заявку</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- О мастере -->
+        <section id="about" class="container fade-up">
+            <h2>О мастере</h2>
+            <div class="about-content">
+                <div>
+                    <h3 style="color: #fff; margin-bottom: 15px;">Николай BDC</h3>
+                    <p class="about-text">Занимаюсь диагностикой и кодингом BMW больше 5 лет. Начинал с собственного E92, постепенно углубляясь в электронику. Сегодня работаю с моделями от E39 до G70.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-red); margin-bottom: 10px;">Почему я</h3>
+                    <ul style="color: var(--text-secondary); list-style: none; padding: 0;">
+                        <li style="margin-bottom: 10px;">✔ Оригинальное ПО: E-Sys, ISTA, Tool32.</li>
+                        <li style="margin-bottom: 10px;">✔ Постоянное обучение и обновления.</li>
+                        <li style="margin-bottom: 10px;">✔ Гарантия на все виды работ.</li>
+                        <li style="margin-bottom: 10px;">✔ Работаю очно и удалённо по РФ.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-red); margin-bottom: 10px;">Моя миссия</h3>
+                    <p class="about-text">Сделать ваш BMW максимально комфортным и технологичным, раскрыв все его возможности. Никакой «колхозной» прошивки — только проверенные решения.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            © 2025 Bavarian Garage 92. ИП Николай BDC. Севастополь, ул. Годлевского.<br>
+            Кодинг, диагностика, чип-тюнинг BMW.
+        </div>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Bavarian Garage 92",
+            "description": "Кодинг, диагностика и ретрофит BMW в Севастополе",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "ул. Годлевского",
+                "addressLocality": "Севастополь",
+                "addressCountry": "RU"
+            },
+            "telephone": "+79786835691",
+            "url": "https://nikolaybdc.github.io"
+        }
+        </script>
+    </footer>
+
+    <button id="backToTop" class="back-to-top" title="Наверх">↑</button>
+
+    <script>
+        // Мобильное меню
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // FAQ аккордеон
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Кнопка наверх
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTopBtn.classList.toggle('show', window.scrollY > 600);
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Подсветка меню при скролле
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (pageYOffset >= section.offsetTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Анимация появления секций
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Отправка формы
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const msgDiv = document.getElementById('formMessage');
+            const data = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    msgDiv.style.display = 'block';
+                    msgDiv.style.color = '#00c853';
+                    msgDiv.textContent = 'Спасибо, ' + data.get('name') + '! Я свяжусь с вами в ближайшее время.';
+                    form.reset();
+                } else {
+                    msgDiv.style.display = 'block';
+                    msgDiv.style.color = '#E30613';
+                    msgDiv.textContent = 'Ошибка отправки. Позвоните: +7 (978) 683-56-91';
+                }
+            })
+            .catch(() => {
+                msgDiv.style.display = 'block';
+                msgDiv.style.color = '#E30613';
+                msgDiv.textContent = 'Ошибка сети. Позвоните: +7 (978) 683-56-91';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nikolaybdc.github.io/sitemap.xml
