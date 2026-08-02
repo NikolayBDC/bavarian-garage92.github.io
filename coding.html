@@ -7,18 +7,20 @@
     <meta name="description" content="Кодинг BMW любых серий: E39, E46, E90, F10, F30, G20, G70. Активация скрытых функций, отключение Start/Stop, коррекция пробега, адаптация.">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* тот же CSS, что и в diagnostic.html, можно скопировать */
-        :root { --bg: #000; --surface: #0a0a0a; --border: #1a1a1a; --text: #f0f0f0; --text-secondary: #a0a0a0; --accent-red: #E30613; --accent-blue: #0066B3; --radius: 4px; --transition: 0.25s ease; }
+        /* идентичный diagnostic.html, можно скопировать */
+        :root { --bg: #000; --surface: #0a0a0a; --border: #1a1a1a; --text: #f0f0f0; --text-secondary: #a0a0a0; --accent-red: #E30613; --accent-blue: #0066B3; --radius: 4px; --transition: 0.25s ease; --shadow-red: 0 8px 20px rgba(229,6,19,0.25); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        a { color: var(--accent-red); text-decoration: none; }
-        .btn { display: inline-block; padding: 14px 32px; font-weight: 600; font-size: 15px; border-radius: var(--radius); text-align: center; transition: all var(--transition); border: 1px solid transparent; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+        a { color: var(--accent-red); text-decoration: none; transition: color var(--transition); }
+        .btn { display: inline-block; padding: 14px 32px; font-weight: 600; font-size: 15px; border-radius: var(--radius); text-align: center; transition: all 0.3s ease; border: 1px solid transparent; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; position: relative; overflow: hidden; }
+        .btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transition: left 0.5s; }
+        .btn:hover::after { left: 100%; }
         .btn-primary { background: var(--accent-red); color: #fff; border-color: var(--accent-red); }
-        .btn-primary:hover { background: transparent; color: var(--accent-red); }
+        .btn-primary:hover { background: transparent; color: var(--accent-red); box-shadow: var(--shadow-red); }
         .btn-telegram { background: #2AABEE; color: #fff; border-color: #2AABEE; }
-        .btn-telegram:hover { background: transparent; color: #2AABEE; }
-        .main-header { background: #000; border-bottom: 1px solid var(--border); padding: 15px 0; position: sticky; top: 0; z-index: 100; }
+        .btn-telegram:hover { background: transparent; color: #2AABEE; box-shadow: 0 4px 12px rgba(42,171,238,0.4); }
+        .main-header { background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 15px 0; position: sticky; top: 0; z-index: 100; }
         .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .logo { font-size: 24px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
         .logo span { color: var(--accent-red); }
@@ -29,14 +31,15 @@
         h1 { font-size: 36px; font-weight: 700; margin-bottom: 30px; color: #fff; }
         h2 { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #fff; }
         .accordion { margin: 30px 0; }
-        .accordion-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 15px; overflow: hidden; background: var(--surface); }
+        .accordion-item { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 15px; overflow: hidden; background: var(--surface); transition: border-color var(--transition), box-shadow var(--transition); }
+        .accordion-item:hover { border-color: var(--accent-red); box-shadow: 0 4px 12px rgba(229,6,19,0.1); }
         .accordion-question { width: 100%; text-align: left; padding: 20px 25px; background: var(--surface); color: #fff; font-weight: 600; font-size: 18px; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background var(--transition); }
         .accordion-question:hover { background: #141414; }
         .accordion-question::after { content: '+'; font-size: 24px; color: var(--accent-red); transition: transform 0.2s; }
         .accordion-item.active .accordion-question::after { content: '−'; }
-        .accordion-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; background: #050505; color: var(--text-secondary); }
+        .accordion-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; background: #050505; color: var(--text-secondary); }
         .accordion-item.active .accordion-answer { padding: 15px 25px; max-height: 500px; }
-        .note { background: var(--surface); border-left: 3px solid var(--accent-red); padding: 20px; margin: 30px 0; color: var(--text-secondary); }
+        .note { background: var(--surface); border-left: 3px solid var(--accent-red); padding: 20px; margin: 30px 0; color: var(--text-secondary); border-radius: var(--radius); }
         .contact-btns { display: flex; gap: 15px; justify-content: center; margin: 30px 0; }
         .back-link { display: inline-block; margin-bottom: 20px; color: var(--text-secondary); font-size: 14px; }
         .back-link:hover { color: #fff; }
