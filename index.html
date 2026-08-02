@@ -249,8 +249,12 @@
         .contact-info { text-align: center; margin-bottom: 30px; color: var(--text-secondary); font-size: 16px; }
         .contact-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
         .map-container {
-            width: 100%; height: 450px; background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); overflow: hidden; margin-top: 40px;
+            width: 100%; height: 450px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-top: 40px;
             transition: border-color var(--transition);
         }
         .map-container:hover { border-color: var(--accent-red); }
@@ -448,10 +452,8 @@
                 <a href="tel:+79786835691" class="btn btn-primary">📞 Позвонить</a>
                 <a href="https://t.me/NikolayBDC" class="btn btn-telegram" target="_blank">💬 Telegram</a>
             </div>
-            <div class="map-container">
-                <!-- ЗАМЕНИТЕ НА IFRAME ИЗ КОНСТРУКТОРА ЯНДЕКС.КАРТ (ссылка https://yandex.ru/maps/-/CTC4667v) -->
-                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Aтвой_код_конструктора_Годлевского&lang=ru_RU&scroll=true" allowfullscreen></iframe>
-            </div>
+            <!-- Контейнер для Яндекс.Карты -->
+            <div class="map-container" id="map"></div>
             <div class="form-block" id="form">
                 <h2 class="text-center" style="margin-bottom: 20px;">Оставить заявку</h2>
                 <p class="text-center" style="color: var(--text-secondary); margin-bottom: 30px;">Перезвоню в течение 15 минут. Работаю без выходных, 10:00–20:00.</p>
@@ -535,6 +537,31 @@
     </footer>
 
     <button id="backToTop" class="back-to-top" title="Наверх">↑</button>
+
+    <!-- Подключение Яндекс.Карт с твоим ключом -->
+    <script src="https://api-maps.yandex.ru/3.0/?apikey=e107a3c3-dff9-4ce6-935b-9d6580daaf7d&lang=ru_RU" type="text/javascript"></script>
+    <script>
+        ymaps.ready(function () {
+            var map = new ymaps.Map('map', {
+                // Примерные координаты ул. Годлевского (замени на точные, если хочешь)
+                center: [44.5865, 33.4750],
+                zoom: 16,
+                controls: ['zoomControl', 'fullscreenControl']
+            });
+
+            var placemark = new ymaps.Placemark([44.5865, 33.4750], {
+                hintContent: 'Bavarian Garage 92',
+                balloonContent: 'Севастополь, ул. Годлевского<br>Кодинг, диагностика BMW'
+            }, {
+                iconLayout: 'default#image',
+                iconImageHref: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNFMzA2MTMiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=',
+                iconImageSize: [40, 40],
+                iconImageOffset: [-20, -40]
+            });
+
+            map.geoObjects.add(placemark);
+        });
+    </script>
 
     <script>
         // Мобильное меню
@@ -623,29 +650,5 @@
             });
         });
     </script>
-
-    <!-- Яндекс.Карта с твоим ключом -->
-<script src="https://api-maps.yandex.ru/3.0/?apikey=e107a3c3-dff9-4ce6-935b-9d6580daaf7d&lang=ru_RU" type="text/javascript"></script>
-<script>
-    ymaps.ready(function () {
-        var map = new ymaps.Map('map', {
-            center: [44.5865, 33.4750], // примерные координаты ул. Годлевского (поправь, если нужно)
-            zoom: 16,
-            controls: ['zoomControl', 'fullscreenControl']
-        });
-
-        var placemark = new ymaps.Placemark([44.5865, 33.4750], {
-            hintContent: 'Bavarian Garage 92',
-            balloonContent: 'Севастополь, ул. Годлевского<br>Кодинг, диагностика BMW'
-        }, {
-            iconLayout: 'default#image',
-            iconImageHref: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNFMzA2MTMiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxMiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=',
-            iconImageSize: [40, 40],
-            iconImageOffset: [-20, -40]
-        });
-
-        map.geoObjects.add(placemark);
-    });
-</script>
 </body>
 </html>
